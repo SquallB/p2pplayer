@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Android\Projects\P2Pplayer\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="956621f7a34214a3507e57749805f5ce41324e21">
+        <dex dex="C:\Android\Projects\P2Pplayer\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_46f4becccda566554e91d73db81bcb17fce1bee1.jar" />
+    </item>
+
+</items>
