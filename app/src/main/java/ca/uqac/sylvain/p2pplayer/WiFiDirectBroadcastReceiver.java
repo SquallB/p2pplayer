@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.support.design.widget.NavigationView;
+import android.view.Menu;
+import android.view.SubMenu;
 import android.widget.Toast;
 
 import java.util.Collection;
@@ -30,8 +33,14 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
                 Collection<WifiP2pDevice> deviceList = peers.getDeviceList();
+                NavigationView navView = (NavigationView) mActivity.findViewById(R.id.nav_view);
+                Menu m = navView.getMenu();
+                SubMenu topChannelMenu = m.addSubMenu("Devices");
+
+
                 for(WifiP2pDevice device: deviceList) {
                     Toast.makeText(mActivity, device.deviceName, Toast.LENGTH_LONG).show();
+                    topChannelMenu.add(device.deviceAddress+"@"+device.deviceName);
                 }
             }
         };
