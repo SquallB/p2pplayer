@@ -3,9 +3,12 @@ package ca.uqac.sylvain.p2pplayer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
+
+import java.util.Collection;
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager mManager;
@@ -26,7 +29,10 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         WifiP2pManager.PeerListListener myPeerListListener = new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                Toast.makeText(mActivity, "Found peers", Toast.LENGTH_LONG).show();
+                Collection<WifiP2pDevice> deviceList = peers.getDeviceList();
+                for(WifiP2pDevice device: deviceList) {
+                    Toast.makeText(mActivity, device.deviceName, Toast.LENGTH_LONG).show();
+                }
             }
         };
 

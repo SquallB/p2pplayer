@@ -99,33 +99,8 @@ public class PlayerFragment extends Fragment {
             seekBar.setMax(musicSrv.getSongDuration());
             seekBar.setProgress(musicSrv.getSongProgress());
             seekBar.setEnabled(true);
-
-            if(musicSrv.isPlaying()) {
-                seekBar.postDelayed(onEverySecond, 1000);
-                running = true;
-            }
-            else {
-                running = false;
-            }
-
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if(fromUser && musicSrv != null) {
-                        musicSrv.setSongProgress(progress);
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
+            seekBar.postDelayed(onEverySecond, 1000);
+            running = true;
         }
         else {
             playButton.setImageResource(R.mipmap.ic_media_play);
@@ -133,6 +108,25 @@ public class PlayerFragment extends Fragment {
             seekBar.setEnabled(false);
             seekBar.setProgress(0);
         }
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser && musicSrv != null) {
+                    musicSrv.setSongProgress(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         updateMetadatas();
     }
