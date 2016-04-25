@@ -76,7 +76,6 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 musicSrv.playPreviousSong();
-                initPlayerView();
             }
         });
 
@@ -84,14 +83,13 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 musicSrv.playNextSong();
-                initPlayerView();
             }
         });
 
         return view;
     }
 
-    private void initPlayerView() {
+    public void initPlayerView() {
         seekBar.setOnClickListener(null);
 
         if(musicSrv != null && musicSrv.getSong() != null) {

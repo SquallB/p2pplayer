@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import java.io.File;
@@ -24,12 +25,17 @@ public class MusicService extends Service
     //current position
     private int songPosn;
     private final IBinder musicBind = new MusicBinder();
+    private LocalBroadcastManager broadcaster;
+
+    static final public String MUSIC_SERVICE_RESULT = "ca.uqac.sylvain.p2pplayer.MusicService.REQUEST_PROCESSED";
+    static final public String MUSIC_SERVICE_MSG = "ca.uqac.sylvain.p2pplayer.MusicService.MSG";
 
     public void onCreate(){
         super.onCreate();
         songPosn = 0;
         songs = new ArrayList<>();
         player = new MediaPlayer();
+        broadcaster = LocalBroadcastManager.getInstance(this);
 
         initMusicPlayer();
     }
@@ -58,7 +64,9 @@ public class MusicService extends Service
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        if(songPosn + 1 < songs.size()) {
+            playNextSong();
+        }
     }
 
     @Override
@@ -70,6 +78,7 @@ public class MusicService extends Service
     public void onPrepared(MediaPlayer mp) {
         //start playback
         mp.start();
+        sendResult("new song");
     }
 
     public void setList(List<CustomFile> songs){
@@ -80,7 +89,7 @@ public class MusicService extends Service
         songs.add(file);
     }
 
-    public void removeSSong(File file) {
+    public void removeSong(File file) {
         songs.remove(file);
     }
 
@@ -187,5 +196,12 @@ public class MusicService extends Service
 
     public void setSong(int songIndex){
         songPosn=songIndex;
+    }
+
+    public void sendResult(String message) {
+        Intent intent = new Intent(MUSIC_SERVICE_RESULT);
+        if(message != null)
+            intent.putExtra(MUSIC_SERVICE_MSG, message);
+        broadcaster.sendBroadcast(intent);
     }
 }

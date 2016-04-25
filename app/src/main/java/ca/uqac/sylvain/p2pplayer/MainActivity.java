@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.support.design.widget.NavigationView;
 import android.app.FragmentTransaction;
 import android.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity
     private Intent playIntent;
     private boolean musicBound = false;
 
-    WifiP2pManager mManager;
-    WifiP2pManager.Channel mChannel;
-    BroadcastReceiver mReceiver;
-    IntentFilter mIntentFilter;
+    private WifiP2pManager mManager;
+    private WifiP2pManager.Channel mChannel;
+    private BroadcastReceiver mReceiver;
+    private IntentFilter mIntentFilter;
+    private BroadcastReceiver receiver;
 
     public MusicService getMusicSrv() {
         return musicSrv;
@@ -69,6 +71,20 @@ public class MainActivity extends AppCompatActivity
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String s = intent.getStringExtra(MusicService.MUSIC_SERVICE_MSG);
+                if(s.equals("new song")) {
+                    Fragment fragment = getFragmentManager().findFragmentByTag(PLAYER_FRAGMENT);
+                    if(fragment != null && fragment instanceof PlayerFragment) {
+                        PlayerFragment playerFragment = (PlayerFragment)fragment;
+                        playerFragment.initPlayerView();
+                    }
+                }
+            }
+        };
     }
 
     //connect to the service
@@ -96,6 +112,9 @@ public class MainActivity extends AppCompatActivity
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
         }
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(MusicService.MUSIC_SERVICE_RESULT)
+        );
     }
 
     @Override
@@ -114,8 +133,14 @@ public class MainActivity extends AppCompatActivity
     /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
-        super.onPause();
         unregisterReceiver(mReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
     }
 
     @Override
