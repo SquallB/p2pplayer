@@ -20,6 +20,7 @@
         </activity>
 
         <service android:enabled="true" android:name="ca.uqac.sylvain.p2pplayer.MusicService" />
+        <service android:enabled="true" android:name="ca.uqac.sylvain.p2pplayer.FileServerService" />
     </application>
 
     <uses-sdk android:minSdkVersion="16" />

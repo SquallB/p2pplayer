@@ -31,8 +31,13 @@ public class GetRemoteFilesAsyncTask extends AsyncTask<String, Void, String> {
             if (socket.isConnected()) {
                 Toast.makeText(activity, "Socket connected", Toast.LENGTH_LONG).show();
             }
+            else {
+                Toast.makeText(activity, "Not connected", Toast.LENGTH_LONG).show();
+            }
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+            Toast.makeText(activity, "Exception in task", Toast.LENGTH_LONG).show();
+        }
 
         return null;
     }

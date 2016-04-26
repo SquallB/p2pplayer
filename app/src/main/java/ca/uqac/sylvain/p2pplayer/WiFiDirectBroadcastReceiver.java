@@ -61,6 +61,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                                         public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
                                             InetAddress address = wifiP2pInfo.groupOwnerAddress;
                                             GetRemoteFilesAsyncTask task = new GetRemoteFilesAsyncTask(mActivity, address);
+                                            task.execute();
                                         }
                                     });
                                 }
