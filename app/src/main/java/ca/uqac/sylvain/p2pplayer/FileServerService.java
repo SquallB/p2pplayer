@@ -15,6 +15,7 @@ import java.io.FileFilter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -47,10 +48,13 @@ public class FileServerService extends Service implements Runnable {
 
     public void run() {
         try {
-            ServerSocket serverSocket = new ServerSocket(8888);
-            Socket client = null;
+            ServerSocket serverSocket = new ServerSocket(); // <-- create an unbound socket first
+            serverSocket.setReuseAddress(true);
+            serverSocket.bind(new InetSocketAddress(8888)); // <-- now bind it
+            Socket client;
 
             while(serviceEnabled) {
+                Log.e("FileServerService", "service enabled");
                 client = serverSocket.accept();
                 String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -58,7 +62,7 @@ public class FileServerService extends Service implements Runnable {
                 while((line = reader.readLine()) != null) {
                     dirPath += line;
                 }
-
+                Log.e("FileServerService", "client found");
                 File file = new File(dirPath);
                 if(file.exists()) {
                     if(file.isDirectory()) {
@@ -78,7 +82,7 @@ public class FileServerService extends Service implements Runnable {
                         PrintWriter pw = new PrintWriter(os);
                         for(int i = 0; i < files.length; i++) {
                             File dirFile = files[i];
-                            pw.write(file.getPath().replace(dirPath, ""));
+                            pw.write(dirFile.getPath().replace(dirPath, ""));
                         }
                         pw.close();
                     }
@@ -90,7 +94,9 @@ public class FileServerService extends Service implements Runnable {
                 client.close();
             }
         }
-        catch(Exception e) {}
+        catch(Exception e) {
+            Log.e("FileServerService", e.getMessage());
+        }
     }
 
     @Override

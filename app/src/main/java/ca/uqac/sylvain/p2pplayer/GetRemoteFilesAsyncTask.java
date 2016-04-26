@@ -32,6 +32,7 @@ public class GetRemoteFilesAsyncTask extends AsyncTask<String, Void, String> {
         try {
             SocketAddress sockaddr = new InetSocketAddress(address, 8888);
             Socket socket = new Socket();
+            socket.setReuseAddress(true);
             socket.connect(sockaddr, 5000); //10 second connection timeout
             if (socket.isConnected()) {
                 Log.e("AsyncTask", "Connected");
