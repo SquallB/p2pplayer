@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 public class FileServerService extends Service implements Runnable {
     private boolean serviceEnabled;
+    private Thread thread;
 
     public FileServerService() {
         this.serviceEnabled = false;
@@ -33,6 +35,14 @@ public class FileServerService extends Service implements Runnable {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        serviceEnabled = true;
+        thread = new Thread(this);
+        thread.start();
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public void run() {
@@ -86,6 +96,7 @@ public class FileServerService extends Service implements Runnable {
     @Override
     public void onDestroy() {
         serviceEnabled = false;
+        thread.interrupt();
         super.onDestroy();
     }
 

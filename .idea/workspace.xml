@@ -43,10 +43,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/WiFiDirectBroadcastReceiver.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/WiFiDirectBroadcastReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_player.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_player.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="P2Pplayer.iws" />
@@ -102,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
+            <state vertical-scroll-proportion="-0.42672414">
+              <caret line="113" column="37" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2107#2138#0" expanded="true" />
@@ -116,13 +115,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_player.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="fragment_player.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_player.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8822055">
+            <state vertical-scroll-proportion="-5.415385">
               <caret line="95" column="49" selection-start-line="95" selection-start-column="49" selection-end-line="95" selection-end-column="49" />
               <folding />
             </state>
@@ -171,17 +170,17 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="61" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="61" />
+              <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#749#750#0" expanded="true" />
-                <element signature="e#792#793#0" expanded="true" />
-                <element signature="e#836#837#0" expanded="true" />
-                <element signature="e#868#869#0" expanded="true" />
-                <element signature="e#1636#2050#0" expanded="true" />
-                <element signature="e#2049#2050#0" expanded="true" />
-                <element signature="e#2906#2907#0" expanded="true" />
-                <element signature="e#2933#2934#0" expanded="true" />
+                <element signature="e#801#802#0" expanded="true" />
+                <element signature="e#844#845#0" expanded="true" />
+                <element signature="e#888#889#0" expanded="true" />
+                <element signature="e#920#921#0" expanded="true" />
+                <element signature="e#1931#2345#0" expanded="true" />
+                <element signature="e#2344#2345#0" expanded="true" />
+                <element signature="e#3229#3230#0" expanded="true" />
+                <element signature="e#3256#3257#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -191,7 +190,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+              <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1764,12 +1763,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MusicService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FIleServerAsyncTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerAsyncTask.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/WiFiDirectBroadcastReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_player.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2257,7 +2256,19 @@
       <option name="project" value="LOCAL" />
       <updated>1461638834752</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ajout service dans manifest">
+      <created>1461639513410</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1461639513410</updated>
+    </task>
+    <task id="LOCAL-00006" summary="ajout image">
+      <created>1461639534332</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1461639534332</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -2271,7 +2282,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2279,7 +2290,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.50428724" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42807826" sideWeight="0.49571276" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42807826" sideWeight="0.49571276" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41311854" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2320,7 +2331,9 @@
     <MESSAGE value="récupération liste des paris" />
     <MESSAGE value="utilisation de broadcastreceiver pour récupérer quand le service joue une nouvelle chanson" />
     <MESSAGE value="ajout de service pour la communication p2p" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajout de service pour la communication p2p" />
+    <MESSAGE value="ajout service dans manifest" />
+    <MESSAGE value="ajout image" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajout image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2692,36 +2705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2107#2138#0" expanded="true" />
-            <element signature="e#2140#2172#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="61" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#749#750#0" expanded="true" />
-            <element signature="e#792#793#0" expanded="true" />
-            <element signature="e#836#837#0" expanded="true" />
-            <element signature="e#868#869#0" expanded="true" />
-            <element signature="e#1636#2050#0" expanded="true" />
-            <element signature="e#2049#2050#0" expanded="true" />
-            <element signature="e#2906#2907#0" expanded="true" />
-            <element signature="e#2933#2934#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FilesFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2769,16 +2752,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.032258">
@@ -2792,9 +2765,49 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8822055">
+        <state vertical-scroll-proportion="-5.415385">
           <caret line="95" column="49" selection-start-line="95" selection-start-column="49" selection-end-line="95" selection-end-column="49" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/FileServerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#801#802#0" expanded="true" />
+            <element signature="e#844#845#0" expanded="true" />
+            <element signature="e#888#889#0" expanded="true" />
+            <element signature="e#920#921#0" expanded="true" />
+            <element signature="e#1931#2345#0" expanded="true" />
+            <element signature="e#2344#2345#0" expanded="true" />
+            <element signature="e#3229#3230#0" expanded="true" />
+            <element signature="e#3256#3257#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/GetRemoteFilesAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ca/uqac/sylvain/p2pplayer/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.42672414">
+          <caret line="113" column="37" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2107#2138#0" expanded="true" />
+            <element signature="e#2140#2172#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

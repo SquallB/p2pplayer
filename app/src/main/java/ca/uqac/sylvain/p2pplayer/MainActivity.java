@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         if(playIntent == null){
             playIntent = new Intent(this, MusicService.class);
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
         }
         if(fileIntent == null) {
             fileIntent = new Intent(this, FileServerService.class);

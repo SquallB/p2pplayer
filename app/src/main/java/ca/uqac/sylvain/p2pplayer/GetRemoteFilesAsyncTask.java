@@ -1,8 +1,13 @@
 package ca.uqac.sylvain.p2pplayer;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -29,14 +34,21 @@ public class GetRemoteFilesAsyncTask extends AsyncTask<String, Void, String> {
             Socket socket = new Socket();
             socket.connect(sockaddr, 5000); //10 second connection timeout
             if (socket.isConnected()) {
-                Toast.makeText(activity, "Socket connected", Toast.LENGTH_LONG).show();
+                Log.e("AsyncTask", "Connected");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String line;
+                while((line = reader.readLine()) != null) {
+                    Log.i("AsyncTask", line);
+                }
+                reader.close();
             }
             else {
-                Toast.makeText(activity, "Not connected", Toast.LENGTH_LONG).show();
+                Log.e("AsyncTask", "Not connected");
             }
+            socket.close();
         }
         catch (Exception e) {
-            Toast.makeText(activity, "Exception in task", Toast.LENGTH_LONG).show();
+            Log.e("AsyncTask", e.getMessage());
         }
 
         return null;
