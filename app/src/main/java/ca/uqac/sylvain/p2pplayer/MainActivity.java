@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String PLAYER_FRAGMENT = "playerFragment";
     public static final String FILES_FRAGMENT = "filesFragment";
-    private static final String SERVER_PORT = "8080";
+    public static final String REMOTE_FILES_FRAGMENT = "remoteFilesFragment";
+
 
     private MusicService musicSrv;
     private Intent playIntent;

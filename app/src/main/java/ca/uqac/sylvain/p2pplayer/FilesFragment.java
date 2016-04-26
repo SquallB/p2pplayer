@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FilesFragment extends Fragment {
+    private FilesAdapter adapter;
+
     private static final float INITIAL_POSITION = 0.0f;
     private static final float ROTATED_POSITION = 90.0f;
 
@@ -100,7 +102,7 @@ public class FilesFragment extends Fragment {
             }
 
             final File musicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-            final FilesAdapter adapter = new FilesAdapter(getFiles(musicDirectory, 0));
+            adapter = new FilesAdapter(getFiles(musicDirectory, 0));
             recyclerView.setAdapter(adapter);
             recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(context, new RecyclerItemClickListener.OnItemClickListener() {

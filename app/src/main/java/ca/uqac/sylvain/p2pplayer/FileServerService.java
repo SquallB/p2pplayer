@@ -54,46 +54,68 @@ public class FileServerService extends Service implements Runnable {
 
             while(serviceEnabled) {
                 client = serverSocket.accept();
-
-                try {
-                    //String read = input.readLine();
-                    String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath();
-                    BufferedWriter output = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-
-                    File file = new File(dirPath);
-                    if(file.exists()) {
-                        if (file.isDirectory()) {
-                            FileFilter filter = new FileFilter() {
-                                @Override
-                                public boolean accept(File pathname) {
-                                    if (pathname.isDirectory()) {
-                                        return true;
-                                    }
-
-                                    return pathname.getName().toLowerCase().endsWith(".mp3");
-                                }
-                            };
-                            File[] files = file.listFiles(filter);
-                            Arrays.sort(files);
-
-                            for (int i = 0; i < files.length; i++) {
-                                File dirFile = files[i];
-                                output.write(dirFile.getName());
-                            }
-                            client.shutdownOutput();
-                            client.shutdownInput();
-                        } else {
-
-                        }
-                    }
-                }
-                catch(Exception e) {
-                    Log.e("Server", e.getMessage());
-                }
+                ClientThread clientThread = new ClientThread(client);
+                clientThread.start();
             }
         }
         catch(Exception e) {
             Log.e("FileServerService", e.getMessage());
+        }
+    }
+
+    private class ClientThread extends Thread implements Runnable {
+        private Socket client;
+        private BufferedReader input;
+        private BufferedWriter output;
+
+        public ClientThread(Socket client) {
+            this.client = client;
+            try {
+                this.input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                this.output = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            }
+            catch(Exception e) {}
+        }
+
+        @Override
+        public void run() {
+            try {
+                //String read = input.readLine();
+                String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath();
+
+                File file = new File(dirPath);
+                if(file.exists()) {
+                    if (file.isDirectory()) {
+                        FileFilter filter = new FileFilter() {
+                            @Override
+                            public boolean accept(File pathname) {
+                                if (pathname.isDirectory()) {
+                                    return true;
+                                }
+
+                                return pathname.getName().toLowerCase().endsWith(".mp3");
+                            }
+                        };
+                        File[] files = file.listFiles(filter);
+                        Arrays.sort(files);
+
+                        for (int i = 0; i < files.length; i++) {
+                            File dirFile = files[i];
+                            output.write(dirFile.getName());
+                            output.newLine();
+                            output.flush();
+                        }
+
+                        client.shutdownOutput();
+                        client.shutdownInput();
+                    } else {
+
+                    }
+                }
+            }
+            catch(Exception e) {
+                Log.e("Server", e.getMessage());
+            }
         }
     }
 
