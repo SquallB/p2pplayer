@@ -9,10 +9,10 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.util.Collection;
@@ -22,6 +22,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager.Channel mChannel;
     private MainActivity mActivity;
     private SubMenu devicesSubMenu;
+    private Collection<WifiP2pDevice> deviceList;
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
                                        MainActivity activity) {
@@ -30,6 +31,36 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         this.mChannel = channel;
         this.mActivity = activity;
         this.devicesSubMenu = null;
+        this.deviceList = null;
+    }
+
+    private void createMenuItem(final WifiP2pDevice device) {
+        MenuItem item = devicesSubMenu.add(device.deviceName);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                WifiP2pConfig config = new WifiP2pConfig();
+                config.deviceAddress = device.deviceAddress;
+                mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        mManager.requestConnectionInfo(mChannel, new WifiP2pManager.ConnectionInfoListener() {
+                            @Override
+                            public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+                                InetAddress address = wifiP2pInfo.groupOwnerAddress;
+                                GetRemoteFilesAsyncTask task = new GetRemoteFilesAsyncTask(mActivity, address);
+                                task.execute();
+                            }
+                        });
+                    }
+                    @Override
+                    public void onFailure(int reason) {
+                        //failure logic
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     @Override
@@ -38,7 +69,6 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         WifiP2pManager.PeerListListener myPeerListListener = new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                Collection<WifiP2pDevice> deviceList = peers.getDeviceList();
                 NavigationView navView = (NavigationView) mActivity.findViewById(R.id.nav_view);
                 Menu m = navView.getMenu();
 
@@ -46,35 +76,19 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                     devicesSubMenu = m.addSubMenu("Devices");
                 }
 
-                for(final WifiP2pDevice device: deviceList) {
-                    MenuItem item = devicesSubMenu.add(device.deviceName);
-                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            WifiP2pConfig config = new WifiP2pConfig();
-                            config.deviceAddress = device.deviceAddress;
-                            mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
-                                @Override
-                                public void onSuccess() {
-                                    mManager.requestConnectionInfo(mChannel, new WifiP2pManager.ConnectionInfoListener() {
-                                        @Override
-                                        public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
-                                            InetAddress address = wifiP2pInfo.groupOwnerAddress;
-                                            GetRemoteFilesAsyncTask task = new GetRemoteFilesAsyncTask(mActivity, address);
-                                            task.execute();
-                                        }
-                                    });
-                                }
-                                @Override
-                                public void onFailure(int reason) {
-                                    //failure logic
-                                }
-                            });
-                            return false;
-                        }
-                    });
+                if(deviceList == null) {
+                    deviceList = peers.getDeviceList();
+                    for(final WifiP2pDevice device: deviceList) {
+                        createMenuItem(device);
+                    }
                 }
-
+                else {
+                    for(WifiP2pDevice device: peers.getDeviceList()) {
+                        if(!deviceList.contains(device)) {
+                            createMenuItem(device);
+                        }
+                    }
+                }
             }
         };
 
