@@ -1,15 +1,12 @@
 package ca.uqac.sylvain.p2pplayer;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

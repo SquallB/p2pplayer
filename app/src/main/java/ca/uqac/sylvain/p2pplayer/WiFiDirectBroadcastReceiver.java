@@ -3,20 +3,25 @@ package ca.uqac.sylvain.p2pplayer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.util.Collection;
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
     private MainActivity mActivity;
+    private SubMenu devicesSubMenu;
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
                                        MainActivity activity) {
@@ -24,6 +29,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         this.mManager = manager;
         this.mChannel = channel;
         this.mActivity = activity;
+        this.devicesSubMenu = null;
     }
 
     @Override
@@ -35,13 +41,39 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 Collection<WifiP2pDevice> deviceList = peers.getDeviceList();
                 NavigationView navView = (NavigationView) mActivity.findViewById(R.id.nav_view);
                 Menu m = navView.getMenu();
-                SubMenu topChannelMenu = m.addSubMenu("Devices");
 
-
-                for(WifiP2pDevice device: deviceList) {
-                    Toast.makeText(mActivity, device.deviceName, Toast.LENGTH_LONG).show();
-                    topChannelMenu.add(device.deviceAddress+"@"+device.deviceName);
+                if(devicesSubMenu == null) {
+                    devicesSubMenu = m.addSubMenu("Devices");
                 }
+
+                for(final WifiP2pDevice device: deviceList) {
+                    MenuItem item = devicesSubMenu.add(device.deviceName);
+                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            WifiP2pConfig config = new WifiP2pConfig();
+                            config.deviceAddress = device.deviceAddress;
+                            mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
+                                @Override
+                                public void onSuccess() {
+                                    mManager.requestConnectionInfo(mChannel, new WifiP2pManager.ConnectionInfoListener() {
+                                        @Override
+                                        public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+                                            InetAddress address = wifiP2pInfo.groupOwnerAddress;
+                                            GetRemoteFilesAsyncTask task = new GetRemoteFilesAsyncTask(mActivity, address);
+                                        }
+                                    });
+                                }
+                                @Override
+                                public void onFailure(int reason) {
+                                    //failure logic
+                                }
+                            });
+                            return false;
+                        }
+                    });
+                }
+
             }
         };
 

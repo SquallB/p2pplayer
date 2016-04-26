@@ -1,6 +1,8 @@
 package ca.uqac.sylvain.p2pplayer;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,8 +13,6 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.NavigationView;
-import android.app.FragmentTransaction;
-import android.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,10 +27,12 @@ public class MainActivity extends AppCompatActivity
 
     public static final String PLAYER_FRAGMENT = "playerFragment";
     public static final String FILES_FRAGMENT = "filesFragment";
+    private static final String SERVER_PORT = "8080";
 
     private MusicService musicSrv;
     private Intent playIntent;
     private boolean musicBound = false;
+    private Intent fileIntent;
 
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
@@ -107,10 +109,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if(playIntent==null){
+        if(playIntent == null){
             playIntent = new Intent(this, MusicService.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
+        }
+        if(fileIntent == null) {
+            fileIntent = new Intent(this, FileServerService.class);
+            startService(fileIntent);
         }
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
                 new IntentFilter(MusicService.MUSIC_SERVICE_RESULT)
@@ -119,8 +125,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
+        stopService(fileIntent);
         stopService(playIntent);
-        musicSrv=null;
+        musicSrv = null;
         super.onDestroy();
     }
 
