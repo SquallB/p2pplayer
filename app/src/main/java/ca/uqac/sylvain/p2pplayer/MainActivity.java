@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String PLAYER_FRAGMENT = "playerFragment";
     public static final String FILES_FRAGMENT = "filesFragment";
+    public static final String SERVER_FILES_FRAGMENT = "serverFilesFragment";
     public static final String REMOTE_FILES_FRAGMENT = "remoteFilesFragment";
 
 
@@ -199,6 +200,9 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.main_fragment, fragment, FILES_FRAGMENT);
             ft.addToBackStack(FILES_FRAGMENT);
             ft.commit();
+        } else if (id == R.id.nav_server) {
+            GetServerFilesAsyncTask task = new GetServerFilesAsyncTask(null, null, 0, this);
+            task.execute("");
         } else if (id == R.id.nav_player) {
             FragmentManager fm = getFragmentManager();
             Fragment fragment = fm.findFragmentByTag(PLAYER_FRAGMENT);

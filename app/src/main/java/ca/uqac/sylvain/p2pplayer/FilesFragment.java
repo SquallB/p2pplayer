@@ -24,24 +24,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FilesFragment extends Fragment {
-    private FilesAdapter adapter;
+    protected FilesAdapter adapter;
 
-    private static final float INITIAL_POSITION = 0.0f;
-    private static final float ROTATED_POSITION = 90.0f;
+    protected static final float INITIAL_POSITION = 0.0f;
+    protected static final float ROTATED_POSITION = 90.0f;
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private int mColumnCount = 1;
-
-    public FilesFragment() {
-    }
-
-    public static FilesFragment newInstance(int columnCount) {
-        FilesFragment fragment = new FilesFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    protected static final String ARG_COLUMN_COUNT = "column-count";
+    protected int mColumnCount = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +41,12 @@ public class FilesFragment extends Fragment {
         }
     }
 
-    private List<CustomFile> getFiles(File directory, int depth) {
+    protected void initAdapter() {
+        final File musicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        adapter = new FilesAdapter(getFiles(musicDirectory, 0));
+    }
+
+    protected List<CustomFile> getFiles(File directory, int depth) {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -68,7 +62,7 @@ public class FilesFragment extends Fragment {
         List<CustomFile> list = new ArrayList<>();
 
         for(int i = 0; i < files.length; i++) {
-            list.add(new CustomFile(files[i].getPath(), depth));
+            list.add(new CustomFile(files[i].getPath(), depth, files[i].isDirectory()));
         }
 
         return list;
@@ -85,11 +79,65 @@ public class FilesFragment extends Fragment {
         }
     }
 
+    protected void expandDirectory(CustomFile item, int position) {
+        List<CustomFile> files = getFiles(item, item.getDepth() + 1);
+        item.setmChildrenList(files);
+        for (CustomFile file : files) {
+            position++;
+            adapter.insert(position, file);
+        }
+    }
+
+    protected void playSong(CustomFile item) {
+        if(getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity)getActivity();
+            final MusicService musicSrv = activity.getMusicSrv();
+            if(activity.isMusicBound()) {
+                String dirPath = item.getParent();
+                if(dirPath != null) {
+                    List<CustomFile> songs = getFiles(new File(dirPath), 0);
+                    musicSrv.setList(songs);
+                    int songPosition = -1;
+                    int i = 0;
+                    while(songPosition == -1 && i < songs.size()) {
+                        CustomFile song = songs.get(i);
+                        if(song.getName().equals(item.getName())) {
+                            songPosition = i;
+                        }
+                        else {
+                            i++;
+                        }
+                    }
+                    if(songPosition > -1) {
+                        musicSrv.playSong(songPosition);
+                    }
+                }
+                else {
+                    musicSrv.playSong(item);
+                }
+                FragmentManager fm = getFragmentManager();
+                Fragment fragment = fm.findFragmentByTag(MainActivity.PLAYER_FRAGMENT);
+                if (fragment == null) {
+                    fragment = new PlayerFragment();
+                }
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.main_fragment, fragment, MainActivity.PLAYER_FRAGMENT);
+                ft.addToBackStack(MainActivity.PLAYER_FRAGMENT);
+                ft.commit();
+            }
+            else {
+                Log.e("MUSIC SERVICE", "Not bound");
+            }
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_file_list, container, false);
         view.setBackgroundColor(Color.WHITE);
+
+        initAdapter();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -101,8 +149,6 @@ public class FilesFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            final File musicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-            adapter = new FilesAdapter(getFiles(musicDirectory, 0));
             recyclerView.setAdapter(adapter);
             recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(context, new RecyclerItemClickListener.OnItemClickListener() {
@@ -125,12 +171,8 @@ public class FilesFragment extends Fragment {
                                         INITIAL_POSITION,
                                         RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                         RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-                                List<CustomFile> files = getFiles(item, item.getDepth() + 1);
-                                item.setmChildrenList(files);
-                                for (CustomFile file : files) {
-                                    position++;
-                                    adapter.insert(position, file);
-                                }
+
+                                expandDirectory(item, position);
                             }
 
                             rotateAnimation.setDuration(200);
@@ -140,46 +182,7 @@ public class FilesFragment extends Fragment {
                             item.setExpanded(!item.isExpanded());
                         }
                         else {
-                            if(getActivity() instanceof MainActivity) {
-                                MainActivity activity = (MainActivity)getActivity();
-                                final MusicService musicSrv = activity.getMusicSrv();
-                                if(activity.isMusicBound()) {
-                                    String dirPath = item.getParent();
-                                    if(dirPath != null) {
-                                        List<CustomFile> songs = getFiles(new File(dirPath), 0);
-                                        musicSrv.setList(songs);
-                                        int songPosition = -1;
-                                        int i = 0;
-                                        while(songPosition == -1 && i < songs.size()) {
-                                            CustomFile song = songs.get(i);
-                                            if(song.getName().equals(item.getName())) {
-                                                songPosition = i;
-                                            }
-                                            else {
-                                                i++;
-                                            }
-                                        }
-                                        if(songPosition > -1) {
-                                            musicSrv.playSong(songPosition);
-                                        }
-                                    }
-                                    else {
-                                        musicSrv.playSong(item);
-                                    }
-                                    FragmentManager fm = getFragmentManager();
-                                    Fragment fragment = fm.findFragmentByTag(MainActivity.PLAYER_FRAGMENT);
-                                    if (fragment == null) {
-                                        fragment = new PlayerFragment();
-                                    }
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    ft.replace(R.id.main_fragment, fragment, MainActivity.PLAYER_FRAGMENT);
-                                    ft.addToBackStack(MainActivity.PLAYER_FRAGMENT);
-                                    ft.commit();
-                                }
-                                else {
-                                    Log.e("MUSIC SERVICE", "Not bound");
-                                }
-                            }
+                            playSong(item);
                         }
                     }
                 })

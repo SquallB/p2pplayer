@@ -8,17 +8,14 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by .Sylvain on 25/04/2016.
- */
 public class RemoteFilesFragment extends FilesFragment {
     public static final String FILES_NAMES_KEY = "filesNames";
 
     private List<String> fileNames;
+    private InetAddress address;
 
     public List<String> getFileNames() {
         return fileNames;
@@ -28,7 +25,17 @@ public class RemoteFilesFragment extends FilesFragment {
         this.fileNames = fileNames;
     }
 
+    public InetAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(InetAddress address) {
+        this.address = address;
+    }
+
     public RemoteFilesFragment() {
+        fileNames = null;
+        address = null;
     }
 
     @Override
@@ -42,12 +49,12 @@ public class RemoteFilesFragment extends FilesFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    private List<CustomFile> getFiles(File directory, int depth) {
+    protected List<CustomFile> getFiles(File directory, int depth) {
         List<CustomFile> files = new ArrayList<>();
 
         if(fileNames != null) {
             for(String fileName: fileNames) {
-                files.add(new CustomFile(fileName, depth));
+                files.add(new CustomFile(fileName, depth, true));
             }
 
             Collections.sort(files);
